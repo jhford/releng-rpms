@@ -1,0 +1,2 @@
+This is a repository of spec files and patches needed to build releng
+specific RPM files.  Small patches should be checked in and larger binaries and source checkouts should be stored using a lookaside cache
