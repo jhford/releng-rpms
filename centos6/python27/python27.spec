@@ -2,6 +2,8 @@
 %define pyver 2.7
 %define pyrel 2
 %define _prefix /tools/%{realname}-%{version}
+# We set lib explicitly to avoid lib64 issues
+%define _libdir %{_prefix}/lib
 
 Name:       mozilla-%{realname}
 Version:	%{pyver}.%{pyrel}
@@ -9,16 +11,24 @@ Release:	1%{?dist}
 Summary:	This is a packaging of %{realname} %{version}-%{release} for Mozilla Release Engineering infrastructure
 
 Group:		mozilla
-License:	tbd
+License:	Python
 URL:		http://python.org
 Source0:	http://python.org/ftp/python/%{pyver}.%{pyrel}/Python-%{pyver}.%{pyrel}.tar.bz2
 Patch0:     python-2.6-fix-cgi.patch
 # from http://pkgs.fedoraproject.org/gitweb/?p=python.git;a=summary
-Patch1:     python-2.7-lib64-sysconfig.patch
+#Patch1:     python-2.7-lib64-sysconfig.patch
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-#BuildRequires:	
-#Requires:	
+# Needed to build a full-featured python
+BuildRequires: readline-devel, openssl-devel, gmp-devel
+BuildRequires: ncurses-devel, gdbm-devel, zlib-devel, expat-devel
+BuildRequires: libGL-devel tk tix gcc-c++ libX11-devel glibc-devel
+BuildRequires: bzip2 tar findutils pkgconfig tcl-devel tk-devel
+BuildRequires: tix-devel bzip2-devel sqlite-devel
+BuildRequires: autoconf
+BuildRequires: db4-devel
+BuildRequires: libffi-devel
+Requires: tcl tk
 
 %description
 %{realname} %{version}-%{release} for Mozilla Release Engineering infrastructure
@@ -26,11 +36,19 @@ BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 %prep
 %setup -q -n Python-%{pyver}.%{pyrel}
 %patch0
-%patch1 -p1
+#%patch1 -p1
 
 
 %build
-%configure
+# We need to specify the runtime library path to avoid loading the
+# system python.  Because the resolution is only "libpython.MAJOR.MINOR.so"
+# we need to make sure that when the system python has the same MAJOR and
+# MINOR numbers that we look in the correct directory.
+export LDFLAGS="-Wl,-rpath=%{_libdir}"
+
+# Forcing a libdir of with lib instead of lib64 make things
+# work properly on x86_64 linux
+%configure --enable-ipv6 --enable-shared --with-system-ffi --with-system-expat
 make %{?_smp_mflags}
 
 
