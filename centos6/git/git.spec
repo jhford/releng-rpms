@@ -1,12 +1,11 @@
 # We do this to avoid stomping on distro-provided packages
 %define realname git
-
 # We also want to install all custom software to alternate locations
-%define _prefix /tools/%{realname}-%{version}
+%define _prefix /tools/%{realname}
 
 Name:       mozilla-%{realname}
 Version:	1.7.9.4
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	This is a packaging of %{realname} %{version}-%{release} for Mozilla Release Engineering infrastructure
 
 Group:		mozilla
@@ -64,5 +63,11 @@ rm -rf $RPM_BUILD_ROOT
 %_prefix/*
 
 %changelog
+* Tue Mar 13 2012 John Ford <jhford mozilla com> - 1.7.9.4-2
+- remove link from 1.7.9.4-2 and remove version from prefix
+
+* Tue Mar 13 2012 John Ford <jhford mozilla com> - 1.7.9.4-2
+- create a link in /tools/ to the real name of the package
+
 * Tue Mar 13 2012 John Ford <jhford mozilla com> - 1.7.9.4-1
 - initial specfile

@@ -2,7 +2,7 @@
 %define realname @NAME@
 
 # We also want to install all custom software to alternate locations
-%define _prefix /tools/%{realname}-%{version}
+%define _prefix /tools/%{realname}
 
 Name:       mozilla-%{realname}
 Version:	
@@ -35,7 +35,7 @@ make %{?_smp_mflags}
 %install
 rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
-
+ln -s %{_prefix} $RPM_BUILD_ROOT/%{basedir}/%{realname}
 
 %clean
 rm -rf $RPM_BUILD_ROOT

@@ -1,13 +1,13 @@
 %define realname python27
 %define pyver 2.7
 %define pyrel 2
-%define _prefix /tools/%{realname}-%{version}
+%define _prefix /tools/%{realname}
 # We set lib explicitly to avoid lib64 issues
 %define _libdir %{_prefix}/lib
 
 Name:       mozilla-%{realname}
 Version:	%{pyver}.%{pyrel}
-Release:	1%{?dist}
+Release:	3%{?dist}
 Summary:	This is a packaging of %{realname} %{version}-%{release} for Mozilla Release Engineering infrastructure
 
 Group:		mozilla
@@ -68,5 +68,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Mar 13 2012 John Ford <jhford mozilla com> 2.7.2-3
+- remove link from 2.7.2-2 and stop having version in prefix
+
+* Tue Mar 13 2012 John Ford <jhford mozilla com> 2.7.2-2
+- create a link in /tools/ to the real name of the package
+
 * Tue Mar 13 2012 John Ford <jhford mozilla com> 2.7.2-1
 - initial commit

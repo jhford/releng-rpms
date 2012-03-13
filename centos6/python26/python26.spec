@@ -1,13 +1,13 @@
 %define realname python26
 %define pyver 2.6
 %define pyrel 7
-%define _prefix /tools/%{realname}-%{version}
+%define _prefix /tools/%{realname}
 # We set lib explicitly to avoid lib64 issues
 %define _libdir %{_prefix}/lib
 
 Name:       mozilla-%{realname}
 Version:	%{pyver}.%{pyrel}
-Release:	1%{?dist}
+Release:	3%{?dist}
 Summary:	This is a packaging of %{realname} %{version}-%{release} for Mozilla Release Engineering infrastructure
 
 Group:		mozilla
@@ -28,8 +28,10 @@ BuildRequires: db4-devel
 BuildRequires: libffi-devel
 Requires: tcl tk
 
+
 %description
 %{realname} %{version}-%{release} for Mozilla Release Engineering infrastructure
+
 
 %prep
 %setup -q -n Python-%{pyver}.%{pyrel}
@@ -68,7 +70,12 @@ rm -rf $RPM_BUILD_ROOT
 %_prefix/*
 
 
-
 %changelog
+* Tue Mar 13 2012 John Ford <jhford mozilla com> 2.6.7-3
+- change prefix to make link from 2.6.7-2 redundant
+
+* Tue Mar 13 2012 John Ford <jhford mozilla com> 2.6.7-2
+- create a link in /tools/ to the real name of the package
+
 * Tue Mar 13 2012 John Ford <jhford mozilla com> 2.6.7-1
 - initial commit

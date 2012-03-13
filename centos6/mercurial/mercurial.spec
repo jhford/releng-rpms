@@ -8,7 +8,7 @@
 
 # This is the top level directory of the python installation
 # we'll use
-%define pyhome /tools/%{pyrealname}-%{pyver}.%{pyrel}
+%define pyhome /tools/%{pyrealname}
 
 # We redefine the standard RPM macros provided by the system
 # since they are all wrong for what we want
