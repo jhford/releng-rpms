@@ -65,3 +65,5 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 
 %changelog
+* Tue Mar 13 2012 John Ford <jhford mozilla com> 2.1.1-1
+- initial commit

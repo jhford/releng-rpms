@@ -70,3 +70,5 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Mar 13 2012 John Ford <jhford mozilla com> 2.6.7-1
+- initial commit

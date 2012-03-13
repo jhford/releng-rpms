@@ -64,3 +64,5 @@ rm -rf $RPM_BUILD_ROOT
 %_prefix/*
 
 %changelog
+* Tue Mar 13 2012 John Ford <jhford mozilla com> - 1.7.9.4-1
+- initial specfile
