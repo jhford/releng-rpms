@@ -10,6 +10,10 @@
 # we'll use
 %define pyhome /tools/%{pyrealname}
 
+# We also want to install all custom software to alternate locations
+%define _prefix /tools/%{pyrealname}-%{realname}
+%define _libdir %{_prefix}/lib
+
 # We redefine the standard RPM macros provided by the system
 # since they are all wrong for what we want
 %define __python %{pyhome}/bin/python%{pyver}
@@ -24,9 +28,6 @@
 # alternate prefix
 %define package_sitelib %{_libdir}/python%{pyver}/site-packages
 %define package_sitearch %{_libdir}/python%{pyver}/site-packages
-
-# We also want to install all custom software to alternate locations
-%define _prefix /tools/%{realname}
 
 Name:       mozilla-%{pyrealname}-%{realname}
 Version:	2.1.1
@@ -60,7 +61,8 @@ export CXXFLAGS="$RPM_OPT_FLAGS"
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__python} setup.py install -O1  --prefix=%{_prefix} --root=$RPM_BUILD_ROOT --record=INSTALLED_FILES
-echo %{package_sitelib} > %{python_sitelib}/%{realname}.pth
+mkdir -p $RPM_BUILD_ROOT/%{python_sitelib}
+echo %{package_sitelib} > $RPM_BUILD_ROOT/%{python_sitelib}/%{realname}.pth
 
 
 %clean
@@ -70,6 +72,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -f INSTALLED_FILES
 %defattr(-,root,root,-)
 %{python_sitelib}/%{realname}.pth
+%{_prefix}
 
 %changelog
 * Wed Mar 14 2012 John Ford <jhford mozilla com> 2.1.1-3

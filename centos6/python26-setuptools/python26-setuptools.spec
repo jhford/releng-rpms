@@ -1,17 +1,17 @@
 # http://fedoraproject.org/wiki/Packaging:Python
 # We do this to avoid stomping on distro-provided packages
-%define realname @NAME@
+%define realname setuptools
 # This is the 'real' name of the python to build with e.g. python26
-%define pyrealname @PYNAME@
-%define pyver @PYVER@
-%define pyrel @PYREL@
+%define pyrealname python26
+%define pyver 2.6
+%define pyrel 7
 
 # This is the top level directory of the python installation
 # we'll use
 %define pyhome /tools/%{pyrealname}
 
 # We also want to install all custom software to alternate locations
-%define _prefix /tools/%{realname}
+%define _prefix /tools/%{pyrealname}-%{realname}
 %define _libdir %{_prefix}/lib
 
 # We redefine the standard RPM macros provided by the system
@@ -30,14 +30,14 @@
 %define package_sitearch %{_libdir}/python%{pyver}/site-packages
 
 Name:       mozilla-%{pyrealname}-%{realname}
-Version:	
+Version:	0.6c11
 Release:	1%{?dist}
 Summary:	This is a packaging of %{realname} %{version}-%{release} for Mozilla Release Engineering infrastructure
 
 Group:		mozilla
-License:	
-URL:		
-Source0:	
+License:	PSF/ZPL
+URL:		http://pypi.python.org/pypi/setuptools
+Source0:	http://pypi.python.org/packages/source/s/setuptools/%{realname}-%{version}.tar.gz
 BuildRoot:	%(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 BuildRequires:  mozilla-%{pyrealname}

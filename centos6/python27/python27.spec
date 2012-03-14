@@ -63,6 +63,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
+%dir %_prefix
 %_prefix/*
 
 
