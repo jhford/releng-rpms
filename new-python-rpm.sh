@@ -3,13 +3,15 @@
 set -ex
 
 os=$1
-name=$2
+interpreter=$2
+name=$3
 
-mkdir $os/$name
-cp mozilla-python-spec.spec $os/$name/$name.spec
+mkdir $os/$interpreter-$name
+specfile=$os/$interpreter-$name/$interpreter-$name.spec
+cp mozilla-python-spec.spec $specfile
 
-sed -i "" -e "s/@NAME@/$2/g" $os/$name/$name.spec
-sed -i "" -e "s/@PYNAME@/python27/g" $os/$name/$name.spec
-sed -i "" -e "s/@PYVER@/2.7/g" $os/$name/$name.spec
-sed -i "" -e "s/@PYREL@/2/g" $os/$name/$name.spec
-ln -s ../../.lib/actions.sh $os/$name/actions.sh
+sed -i "" -e "s/@NAME@/$2/g" $specfile
+sed -i "" -e "s/@PYNAME@/python27/g" $specfile
+sed -i "" -e "s/@PYVER@/2.7/g" $specfile
+sed -i "" -e "s/@PYREL@/2/g" $specfile
+ln -s ../../.lib/actions.sh $os/$interpreter-$name/actions.sh

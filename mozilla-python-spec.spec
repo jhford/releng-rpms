@@ -20,6 +20,11 @@
 %define python3_sitearch /does/not/exist
 %define py3dir /does/not/exist
 
+# We define some things useful for installing the module to an
+# alternate prefix
+%define package_sitelib %{_libdir}/python%{pyver}/site-packages
+%define package_sitearch %{_libdir}/python%{pyver}/site-packages
+
 # We also want to install all custom software to alternate locations
 %define _prefix /tools/%{realname}
 
@@ -56,6 +61,7 @@ export CXXFLAGS="$RPM_OPT_FLAGS"
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__python} setup.py install -O1 --prefix=%{_prefix} --root=$RPM_BUILD_ROOT --record=INSTALLED_FILES
+echo %{package_sitelib} > %{python_sitelib}/%{realname}.pth
 
 
 %clean
@@ -64,5 +70,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f INSTALLED_FILES
 %defattr(-,root,root,-)
+%{python_sitelib}/%{realname}.pth
 
 %changelog
