@@ -11,7 +11,7 @@
 %define pyhome /tools/%{pyrealname}
 
 # We also want to install all custom software to alternate locations
-%define _prefix /tools/%{realname}
+%define _prefix /tools/%{pyrealname}-%{realname}
 %define _libdir %{_prefix}/lib
 
 # We redefine the standard RPM macros provided by the system
